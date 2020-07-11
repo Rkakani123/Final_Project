@@ -1,0 +1,60 @@
+CREATE PROCEDURE addCustomer (in CustomerName varchar(30), in Address varchar(50), in Mobile long, in Email varchar(30), in UId varchar(20), in Date_of_Birth varchar(20))
+BEGIN
+insert into customerdetails values(0,CustomerName,Address,Mobile,Email,UId,Date_of_Birth);
+END
+
+CREATE PROCEDURE verifyAccount(in username varchar(20), in password varchar(20))
+BEGIN
+select * from accountdetails where Username=username AND Password=aes_encrypt(password,username);
+END
+
+CREATE PROCEDURE getCustomer(in cust int)
+BEGIN
+select * from customerdetails where CustomerId = cust;
+END
+
+CREATE PROCEDURE getAccount(in cust int)
+BEGIN
+select * from accountdetails where CustomerId = cust;
+END
+
+CREATE PROCEDURE getCustomerId(in mob long)
+BEGIN
+select CustomerId from customerdetails where Mobile=mob;
+END
+
+CREATE PROCEDURE addAccount(in acno long, in cust int, in atype varchar(10), in username varchar(20), in pass varchar(20), in balance double )
+BEGIN
+insert into accountdetails values(acno,cust,atype,username,aes_encrypt(pass,username),balance);
+END
+
+CREATE PROCEDURE addSavingAccount(in acno long, in daily double, in min double)
+BEGIN
+insert into savingdetails values(acno,daily,min);
+END
+
+CREATE PROCEDURE addCurrentAccount(in acno long, in cname varchar(30), in doo varchar(20), in overdraft long)
+BEGIN
+insert into currentdetails values(acno,cname,doo,overdraft);
+END
+
+CREATE PROCEDURE isMobileAvailable(in mob long)
+BEGIN
+select * from customerdetails where Mobile=mob;
+END
+
+CREATE PROCEDURE isEmailAvailable(in mail varchar(30))
+BEGIN
+select * from customerdetails where Email=mail;
+END
+
+CREATE PROCEDURE isAccountNoAvailable(in acno long)
+BEGIN
+select * from accountdetails where AccountNO=acno;
+END
+
+CREATE PROCEDURE isUsernameAvailable(in username varchar(20))
+BEGIN
+select * from accountdetails where Username=username;
+END
+
